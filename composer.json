@@ -1,0 +1,36 @@
+{
+  "name": "chikyu/chikyu-sdk",
+
+  "description": "chikyu PHP SDK",
+
+  "keywords": ["sdk", "chikyu", "api", "crm", "sfa"],
+
+  "homepage": "https://github.com/chikyuinc/chikyu-sdk-php",
+
+  "license": "MIT",
+
+  "authors": [
+    {
+      "name": "Chikyu Inc.",
+      "homepage": "https://chikyu.net"
+    }
+  ],
+
+  "require" : {
+    "aws/aws-sdk-php": "2.*"
+  },
+
+  "require-dev": {
+    "phpunit/phpunit": "5.*"
+  },
+
+  "autoload": {
+    "psr-4": {
+      "ChikyuSdk\\": "lib/",
+      "ChikyuSdk\\Config\\"  : "lib/config",
+      "ChikyuSdk\\Error\\"   : "lib/error",
+      "ChikyuSdk\\Helper\\"  : "lib/helper",
+      "ChikyuSdk\\Resource\\": "lib/resource"
+    }
+  }
+}
