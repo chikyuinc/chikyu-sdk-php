@@ -40,7 +40,7 @@ abstract class ApiResource {
         }
 
         //print_r($header_list);
-        print($url . "\n");
+        //print($url . "\n");
         $result = file_get_contents($url, false, stream_context_create(array( 'http' =>
             array(
                 'method' => 'POST',
