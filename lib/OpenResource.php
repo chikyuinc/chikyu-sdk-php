@@ -1,6 +1,7 @@
-<?php namespace ChikyuSdk;
+<?php namespace Chikyu\Sdk;
 
-use ChikyuSdk\Error\ApiExecuteException;
+
+use Chikyu\Sdk\Error\ApiExecuteException;
 
 class OpenResource extends ApiResource {
 

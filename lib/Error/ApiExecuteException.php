@@ -1,4 +1,4 @@
-<?php namespace ChikyuSdk\Error;
+<?php namespace Chikyu\Sdk\Error;
 
 use Exception;
 

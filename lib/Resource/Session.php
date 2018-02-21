@@ -1,9 +1,10 @@
-<?php namespace ChikyuSdk\Resource;
+<?php namespace Chikyu\Sdk\Resource;
 
 use Aws\Sts;
-use ChikyuSdk\Config\Configs;
-use ChikyuSdk\Error\ApiExecuteException;
-use ChikyuSdk\OpenResource;
+use Chikyu\Sdk\Config\Configs;
+use Chikyu\Sdk\Error\ApiExecuteException;
+use Chikyu\Sdk\OpenResource;
+use Chikyu\Sdk\SecureResource;
 
 class Session {
     private $sessionId;
@@ -56,7 +57,7 @@ class Session {
      * @throws ApiExecuteException
      */
     public function changeOrgan($organ_id) {
-        $resource = new \ChikyuSdk\SecureResource($this);
+        $resource = new SecureResource($this);
         $res = $resource->invoke('/session/organ/change', array('target_organ_id' => $organ_id));
         $this->apiKey = $res['api_key'];
     }
@@ -65,7 +66,7 @@ class Session {
      * @throws ApiExecuteException
      */
     public function logout() {
-        $resource = new \ChikyuSdk\SecureResource($this);
+        $resource = new SecureResource($this);
         $resource->invoke('/session/logout', array());
     }
 

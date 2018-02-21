@@ -1,11 +1,12 @@
 <?php
 
-use ChikyuSdk\Resource\Session;
-use ChikyuSdk\Resource\Token;
+use Chikyu\Sdk\Resource\Session;
+use Chikyu\Sdk\Resource\Token;
 
 require_once '../../vendor/autoload.php';
-require_once "../../init.php";
 require_once "../test_config.php";
+
+\Chikyu\Sdk\Config\Configs::setMode('local', '192.168.33.1:9090');
 
 $config = new TestConfig();
 

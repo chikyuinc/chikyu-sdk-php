@@ -26,11 +26,7 @@
 
   "autoload": {
     "psr-4": {
-      "ChikyuSdk\\": "lib/",
-      "ChikyuSdk\\Config\\"  : "lib/config",
-      "ChikyuSdk\\Error\\"   : "lib/error",
-      "ChikyuSdk\\Helper\\"  : "lib/helper",
-      "ChikyuSdk\\Resource\\": "lib/resource"
+      "Chikyu\\Sdk\\": "lib/"
     }
   }
 }

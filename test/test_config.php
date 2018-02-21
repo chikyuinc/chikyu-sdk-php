@@ -1,13 +1,13 @@
 <?php
+require_once __DIR__ . '/../vendor/autoload.php';
 
-
-use ChikyuSdk\Config\Configs;
+use Chikyu\Sdk\Config\Configs;
 
 class TestConfig {
     private $ini;
     public function __construct() {
         $n = Configs::mode();
-        $this->ini = parse_ini_file(__DIR__ . "/config.{$n}.ini", true);
+        $this->ini = parse_ini_file(__DIR__ . "/Config.{$n}.ini", true);
     }
 
     public function item($section, $name) {

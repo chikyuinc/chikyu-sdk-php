@@ -1,11 +1,9 @@
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . "/../test_config.php";
 
-use ChikyuSdk\Resource\Session;
-use ChikyuSdk\SecureResource;
-
-require_once '../../vendor/autoload.php';
-require_once "../../init.php";
-require_once "../test_config.php";
+use Chikyu\Sdk\Resource\Session;
+use Chikyu\Sdk\SecureResource;
 
 $config = new TestConfig();
 

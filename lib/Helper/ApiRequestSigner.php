@@ -1,6 +1,6 @@
-<?php namespace ChikyuSdk\Helper;
+<?php namespace Chikyu\Sdk\Helper;
 
-use ChikyuSdk\Config\Configs;
+use Chikyu\Sdk\Config\Configs;
 
 
 /**

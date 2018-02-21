@@ -1,7 +1,7 @@
-<?php namespace ChikyuSdk;
+<?php namespace Chikyu\Sdk;
 
-use ChikyuSdk\Config\Configs;
-use ChikyuSdk\Error\ApiExecuteException;
+use Chikyu\Sdk\Config\Configs;
+use Chikyu\Sdk\Error\ApiExecuteException;
 
 abstract class ApiResource {
     static function buildUrl($apiClass, $apiPath, $withHost=true) {
@@ -40,7 +40,7 @@ abstract class ApiResource {
         }
 
         //print_r($header_list);
-
+        print($url . "\n");
         $result = file_get_contents($url, false, stream_context_create(array( 'http' =>
             array(
                 'method' => 'POST',

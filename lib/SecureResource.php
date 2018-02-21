@@ -1,12 +1,18 @@
-<?php namespace ChikyuSdk;
+<?php namespace Chikyu\Sdk;
 
-use ChikyuSdk\Config\Configs;
-use ChikyuSdk\Error\ApiExecuteException;
-use ChikyuSdk\Helper\ApiRequestSigner;
+
+use Chikyu\Sdk\Config\Configs;
+use Chikyu\Sdk\Error\ApiExecuteException;
+use Chikyu\Sdk\Helper\ApiRequestSigner;
+use Chikyu\Sdk\Resource\Session;
 
 class SecureResource extends ApiResource {
     private $session = null;
 
+    /**
+     * SecureResource constructor.
+     * @param Session
+     */
     public function __construct($session) {
         $this->session = $session;
     }

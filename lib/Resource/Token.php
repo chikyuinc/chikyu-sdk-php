@@ -1,8 +1,8 @@
-<?php namespace ChikyuSdk\Resource;
+<?php namespace Chikyu\Sdk\Resource;
 
-use ChikyuSdk\Error\ApiExecuteException;
-use ChikyuSdk\OpenResource;
-use ChikyuSdk\SecureResource;
+use Chikyu\Sdk\Error\ApiExecuteException;
+use Chikyu\Sdk\OpenResource;
+use Chikyu\Sdk\SecureResource;
 
 class Token {
     /**
