@@ -11,12 +11,14 @@ class Session {
     private $identityId;
     private $apiKey;
     private $credential;
+    private $user;
 
-    private function __construct($sessionId, $identityId, $apiKey, $credential) {
+    private function __construct($sessionId, $identityId, $apiKey, $credential, $user) {
         $this->sessionId = $sessionId;
         $this->identityId = $identityId;
         $this->apiKey = $apiKey;
         $this->credential = $credential;
+        $this->user = $user;
     }
 
     /**
@@ -37,6 +39,7 @@ class Session {
         $sessionId = $res['session_id'];
         $identityId = $res['cognito_identity_id'];
         $cognitoToken = $res['cognito_token'];
+        $user = $res['user'];
         $apiKey = $res['api_key'];
 
         $sts = Sts\StsClient::factory();
@@ -49,7 +52,7 @@ class Session {
 
         $credentials = $token->get('Credentials');
 
-        return new Session($sessionId, $identityId, $apiKey, $credentials);
+        return new Session($sessionId, $identityId, $apiKey, $credentials, $user);
     }
 
     /**
@@ -98,4 +101,10 @@ class Session {
         return $this->credential;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getUser() {
+        return $this->user;
+    }
 }

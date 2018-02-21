@@ -13,6 +13,8 @@ $session = Session::login(
     $config->item('token', 'login_secret_token')
 );
 
+print_r($session->getUser());
+
 $session->changeOrgan(1460);
 
 $resource = new SecureResource($session);
