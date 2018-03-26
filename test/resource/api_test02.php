@@ -3,10 +3,9 @@
 use Chikyu\Sdk\Resource\Session;
 use Chikyu\Sdk\Resource\Token;
 
-require_once '../../vendor/autoload.php';
 require_once "../test_config.php";
 
-\Chikyu\Sdk\Config\Configs::setMode('local', '192.168.33.1:9090');
+\Chikyu\Sdk\Config\ApiConfig::setMode('local');
 
 $config = new TestConfig();
 

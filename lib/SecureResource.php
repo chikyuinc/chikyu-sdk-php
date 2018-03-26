@@ -1,7 +1,7 @@
 <?php namespace Chikyu\Sdk;
 
 
-use Chikyu\Sdk\Config\Configs;
+use Chikyu\Sdk\Config\ApiConfig;
 use Chikyu\Sdk\Error\ApiExecuteException;
 use Chikyu\Sdk\Helper\ApiRequestSigner;
 use Chikyu\Sdk\Resource\Session;
@@ -13,7 +13,7 @@ class SecureResource extends ApiResource {
      * SecureResource constructor.
      * @param Session
      */
-    public function __construct($session) {
+    public function __construct(Session $session) {
         $this->session = $session;
     }
 
@@ -32,7 +32,7 @@ class SecureResource extends ApiResource {
             'data' => $data
         );
 
-        if (Configs::mode() == 'local') {
+        if (ApiConfig::mode() == 'local') {
             $params['identity_id'] = $this->session->getIdentityId();
         }
 

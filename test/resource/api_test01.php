@@ -1,9 +1,12 @@
 <?php
-require_once __DIR__ . '/../../vendor/autoload.php';
 require_once __DIR__ . "/../test_config.php";
 
+use Chikyu\Sdk\Log\ApiLogger;
 use Chikyu\Sdk\Resource\Session;
 use Chikyu\Sdk\SecureResource;
+use Monolog\Logger;
+
+ApiLogger::init(null, null, Logger::DEBUG);
 
 $config = new TestConfig();
 
@@ -13,11 +16,13 @@ $session = Session::login(
     $config->item('token', 'login_secret_token')
 );
 
-print_r($session->getUser());
+$s = strval($session);
+$s2 = Session::fromStr($s);
 
-$session->changeOrgan(1460);
+$s2->changeOrgan(1460);
 
-$resource = new SecureResource($session);
+
+$resource = new SecureResource($s2);
 
 $data = array(
     'items_per_page' => 10,
@@ -28,4 +33,4 @@ $r = $resource->invoke('/session/organ/list', $data);
 
 print_r($r);
 
-$session->logout();
+$s2->logout();

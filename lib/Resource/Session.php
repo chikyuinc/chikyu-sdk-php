@@ -1,10 +1,11 @@
 <?php namespace Chikyu\Sdk\Resource;
 
 use Aws\Sts;
-use Chikyu\Sdk\Config\Configs;
+use Chikyu\Sdk\Config\ApiConfig;
 use Chikyu\Sdk\Error\ApiExecuteException;
 use Chikyu\Sdk\OpenResource;
 use Chikyu\Sdk\SecureResource;
+use phpDocumentor\Reflection\Types\Integer;
 
 class Session {
     private $sessionId;
@@ -45,8 +46,8 @@ class Session {
         $sts = Sts\StsClient::factory();
 
         $token = $sts->assumeRoleWithWebIdentity(array(
-            'RoleArn' => Configs::awsRoleArn(),
-            'RoleSessionName' => Configs::awsApiGatewayServiceName(),
+            'RoleArn' => ApiConfig::awsRoleArn(),
+            'RoleSessionName' => ApiConfig::awsApiGatewayServiceName(),
             'WebIdentityToken' => $cognitoToken
         ));
 
@@ -63,6 +64,7 @@ class Session {
         $resource = new SecureResource($this);
         $res = $resource->invoke('/session/organ/change', array('target_organ_id' => $organ_id));
         $this->apiKey = $res['api_key'];
+        $this->user = $res['user'];
     }
 
     /**
@@ -71,6 +73,36 @@ class Session {
     public function logout() {
         $resource = new SecureResource($this);
         $resource->invoke('/session/logout', array());
+        $this->sessionId = null;
+        $this->user = null;
+        $this->credential = null;
+        $this->apiKey = null;
+        $this->identityId = null;
+    }
+
+    public function toArray() {
+        return [
+            'sessionId' => $this->sessionId,
+            'identityId' => $this->identityId,
+            'apiKey' => $this->apiKey,
+            'credential' => $this->credential,
+            'user' => $this->user
+        ];
+    }
+
+    public static function fromStr($jsonString) {
+        $item = json_decode($jsonString, true);
+        return self::fromArray($item);
+    }
+
+    public static function fromArray(array $item) {
+        return new Session(
+            $item['sessionId'], $item['identityId'], $item['apiKey'], $item['credential'], $item['user']);
+    }
+
+    public function __toString()
+    {
+        return json_encode($this->toArray());
     }
 
     /**

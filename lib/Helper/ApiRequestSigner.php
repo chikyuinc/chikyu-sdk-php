@@ -1,6 +1,6 @@
 <?php namespace Chikyu\Sdk\Helper;
 
-use Chikyu\Sdk\Config\Configs;
+use Chikyu\Sdk\Config\ApiConfig;
 
 
 /**
@@ -29,7 +29,7 @@ class ApiRequestSigner {
         //この部分のhttpヘッダ名は小文字である必要がある。
         $headers = array();
         $headers['content-type'] = 'application/json';
-        $headers['host'] = Configs::host();
+        $headers['host'] = ApiConfig::host();
         $headers['x-amz-date'] = $time;
         $headers['x-amz-security-token'] = $this->credential['SessionToken'];
         $headers['x-api-key'] = $this->apiKey;
@@ -80,8 +80,8 @@ class ApiRequestSigner {
     }
 
     private function getServiceDescription($currentDate) {
-        $a = Configs::awsRegion();
-        $b = Configs::awsApiGatewayServiceName();
+        $a = ApiConfig::awsRegion();
+        $b = ApiConfig::awsApiGatewayServiceName();
         $c = self::$AWS4_REQUEST;
         return "{$currentDate}/{$a}/{$b}/{$c}";
     }
@@ -102,8 +102,8 @@ class ApiRequestSigner {
     private function getSignatureKey($key, $date, $is_raw=false) {
         $secret = "AWS4{$key}";
         $keyDate = $this->getHmacSha256($secret, $date, true);
-        $keyRegion = $this->getHmacSha256($keyDate, Configs::awsRegion(), true);
-        $keyService = $this->getHmacSha256($keyRegion, Configs::awsApiGatewayServiceName(), true);
+        $keyRegion = $this->getHmacSha256($keyDate, ApiConfig::awsRegion(), true);
+        $keyService = $this->getHmacSha256($keyRegion, ApiConfig::awsApiGatewayServiceName(), true);
         return $this->getHmacSha256($keyService, self::$AWS4_REQUEST, $is_raw);
     }
 

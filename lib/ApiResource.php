@@ -1,13 +1,14 @@
 <?php namespace Chikyu\Sdk;
 
-use Chikyu\Sdk\Config\Configs;
+use Chikyu\Sdk\Config\ApiConfig;
 use Chikyu\Sdk\Error\ApiExecuteException;
+use Chikyu\Sdk\Log\ApiLogger;
 
 abstract class ApiResource {
     static function buildUrl($apiClass, $apiPath, $withHost=true) {
-        $p = Configs::protocol();
-        $h = Configs::host();
-        $e = Configs::envName();
+        $p = ApiConfig::protocol();
+        $h = ApiConfig::host();
+        $e = ApiConfig::envName();
 
         if (strpos($apiPath, '/') === 0) {
             $apiPath = substr($apiPath, 1);
@@ -39,8 +40,10 @@ abstract class ApiResource {
             $header_list[] = 'content-type: application/json';
         }
 
-        //print_r($header_list);
-        //print($url . "\n");
+        ApiLogger::debug("******** REQUEST ********");
+        ApiLogger::debug($header_list);
+        ApiLogger::debug($url . "\n");
+        ApiLogger::debug("*************************");
         $result = file_get_contents($url, false, stream_context_create(array( 'http' =>
             array(
                 'method' => 'POST',
@@ -50,7 +53,10 @@ abstract class ApiResource {
             )
         )));
 
-        //print_r($http_response_header);
+        ApiLogger::debug("******** RESPONSE ********");
+        ApiLogger::debug($http_response_header);
+        ApiLogger::debug($result);
+        ApiLogger::debug("*************************");
 
         return $result;
     }
