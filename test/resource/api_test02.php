@@ -5,9 +5,7 @@ use Chikyu\Sdk\Resource\Token;
 
 require_once "../test_config.php";
 
-\Chikyu\Sdk\Config\ApiConfig::setMode('local');
-
-$config = new TestConfig();
+$config = new TestConfig('local');
 
 $token = new Token();
 $token_name = 'hogehogepiyo';

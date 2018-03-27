@@ -80,14 +80,24 @@ class Session {
         $this->identityId = null;
     }
 
-    public function toArray() {
-        return [
-            'sessionId' => $this->sessionId,
-            'identityId' => $this->identityId,
-            'apiKey' => $this->apiKey,
-            'credential' => $this->credential,
-            'user' => $this->user
-        ];
+    public function toArray($withUser=true) {
+        if ($withUser) {
+            return [
+                'sessionId' => $this->sessionId,
+                'identityId' => $this->identityId,
+                'apiKey' => $this->apiKey,
+                'credentials' => $this->credential,
+                'user' => $this->user
+            ];
+        } else {
+            return [
+                'sessionId' => $this->sessionId,
+                'identityId' => $this->identityId,
+                'apiKey' => $this->apiKey,
+                'credentials' => $this->credential,
+                'user' => ['user_id' => $this->user['user_id']]
+            ];
+        }
     }
 
     public static function fromStr($jsonString) {
@@ -97,7 +107,7 @@ class Session {
 
     public static function fromArray(array $item) {
         return new Session(
-            $item['sessionId'], $item['identityId'], $item['apiKey'], $item['credential'], $item['user']);
+            $item['sessionId'], $item['identityId'], $item['apiKey'], $item['credentials'], $item['user']);
     }
 
     public function __toString()

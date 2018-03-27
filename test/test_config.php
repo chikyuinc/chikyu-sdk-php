@@ -6,11 +6,10 @@ use Chikyu\Sdk\Config\ApiConfig;
 date_default_timezone_set('Asia/Tokyo');
 
 
-ApiConfig::setMode('devdc');
-
 class TestConfig {
     private $ini;
-    public function __construct() {
+    public function __construct($mode) {
+        ApiConfig::setMode($mode);
         $n = ApiConfig::mode();
         $this->ini = parse_ini_file(__DIR__ . "/Config.{$n}.ini", true);
     }
