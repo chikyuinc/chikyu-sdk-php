@@ -21,7 +21,8 @@ print_r($t);
 $r = $token->renew(
     $token_name,
     $t['login_token'],
-    $t['login_secret_token']
+    $t['login_secret_token'],
+    86400 * 30 * 12 * 10
 );
 print_r($r);
 

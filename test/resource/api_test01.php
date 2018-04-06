@@ -8,7 +8,7 @@ use Monolog\Logger;
 
 ApiLogger::init(null, null, Logger::DEBUG);
 
-$config = new TestConfig('devdc');
+$config = new TestConfig('local');
 
 $session = Session::login(
     $config->item('token', 'token_name'),

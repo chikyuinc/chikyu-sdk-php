@@ -36,12 +36,15 @@ class Session {
             'login_token' => $loginToken,
             'login_secret_token' => $loginSecretToken
         ));
+        return self::fromData($res);
+    }
 
-        $sessionId = $res['session_id'];
-        $identityId = $res['cognito_identity_id'];
-        $cognitoToken = $res['cognito_token'];
-        $user = $res['user'];
-        $apiKey = $res['api_key'];
+    public static function fromData($data) {
+        $sessionId = $data['session_id'];
+        $identityId = $data['cognito_identity_id'];
+        $cognitoToken = $data['cognito_token'];
+        $user = $data['user'];
+        $apiKey = $data['api_key'];
 
         $sts = Sts\StsClient::factory();
 
