@@ -32,7 +32,7 @@ class SecureResource extends ApiResource {
             'data' => $data
         );
 
-        if (ApiConfig::mode() == 'local') {
+        if (ApiConfig::mode() == 'local' || ApiConfig::mode() == 'docker') {
             $params['identity_id'] = $this->session->getIdentityId();
         }
 
