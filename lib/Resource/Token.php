@@ -13,7 +13,7 @@ class Token {
      * @return mixed
      * @throws ApiExecuteException
      */
-    public function create($token_name, $email, $password, $duration=86400) {
+    public static function create($token_name, $email, $password, $duration=86400) {
         $resource = new OpenResource();
         return $resource->invoke('/session/token/create', [
             'token_name' => $token_name,
@@ -31,7 +31,7 @@ class Token {
      * @return mixed
      * @throws ApiExecuteException
      */
-    public function renew($token_name, $login_token, $login_secret_token, $duration=86400) {
+    public static function renew($token_name, $login_token, $login_secret_token, $duration=86400) {
         $resource = new OpenResource();
         return $resource->invoke('/session/token/renew', [
             'token_name' => $token_name,
@@ -49,7 +49,7 @@ class Token {
      * @return mixed
      * @throws ApiExecuteException
      */
-    public function revoke($token_name, $login_token, $login_secret_token, $session) {
+    public static function revoke($token_name, $login_token, $login_secret_token, $session) {
         $resource = new SecureResource($session);
         return $resource->invoke('/session/token/revoke', [
             'token_name' => $token_name,
