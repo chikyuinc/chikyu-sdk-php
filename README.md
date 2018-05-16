@@ -1,4 +1,4 @@
-# chikyu-php-sdk
+# chikyu-sdk-php
 ## 概要
 **内容は全てリリース前のものであり、予告なく変更となる場合があります**
 
@@ -52,7 +52,7 @@ print_r($invoker->invoke('/entity/companies/list', ['items_per_page' => 10, 'pag
 
 ## 詳細
 ### class1(APIキーのみで呼び出し可能)
-#### APIトークンを生成する
+#### APIキーを生成する
 ```token.php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
@@ -64,7 +64,7 @@ use Chikyu\Sdk\SecureResource;
 # 2018/05/15現在、まだ本番環境が存在しないため、接続先の指定が必要。
 ApiConfig::setMode('devdc');
 
-# 下記のclass2 apiを利用し、予めトークンを生成しておく。
+# 後述のclass2 apiを利用し、予めログイン用の「認証トークン」(＊ここで言う「APIキー」とは別)を生成しておく。
 $session = Session::login('token_name',  'login_token',  'login_secret_token');
 $invoker = new SecureResource($session);
 
@@ -91,7 +91,6 @@ use Chikyu\Sdk\PublicResource;
 # 2018/05/15現在、まだ本番環境が存在しないため、接続先の指定が必要。
 ApiConfig::setMode('devdc');
 
-
 $invoker = new PublicResource('api_key', 'auth_key');
 
 # 第一引数=APIのパスを指定(詳細については、ページ最下部のリンクを参照)
@@ -103,8 +102,8 @@ $res = $invoker->invoke('/entity/prospects/list', ['page_index' => '0', 'items_p
 print_r($res);
 ```
 
-### class2(APIトークンからセッションを生成)
-#### APIトークンを生成する
+### class2(認証トークンからセッションを生成)
+#### 認証トークンを生成する
 ```create_token.php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
