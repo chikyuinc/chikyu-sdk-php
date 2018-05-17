@@ -76,7 +76,9 @@ abstract class ApiResource {
             throw new ApiExecuteException("APIの呼び出しに失敗しました: " . $map['message']);
         }
 
-        return $map['data'];
+        if (array_key_exists('data', $map)) {
+            return $map['data'];
+        }
     }
 
     abstract function invoke($apiPath, $data);
