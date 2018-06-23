@@ -1,11 +1,10 @@
 <?php namespace Chikyu\Sdk\Resource;
 
-use Aws\Sts;
+use Aws\Sts\StsClient;
 use Chikyu\Sdk\Config\ApiConfig;
 use Chikyu\Sdk\Error\ApiExecuteException;
 use Chikyu\Sdk\OpenResource;
 use Chikyu\Sdk\SecureResource;
-use phpDocumentor\Reflection\Types\Integer;
 
 class Session {
     private $sessionId;
@@ -46,12 +45,20 @@ class Session {
         $user = $data['user'];
         $apiKey = $data['api_key'];
 
-        $sts = Sts\StsClient::factory();
+        $sts = new StsClient(array(
+            'version' => 'latest',
+            'region' => ApiConfig::awsRegion(),
+            'credentials' => array(
+                'key' => '',
+                'secret' => ''
+            )
+        ));
 
         $token = $sts->assumeRoleWithWebIdentity(array(
             'RoleArn' => ApiConfig::awsRoleArn(),
             'RoleSessionName' => ApiConfig::awsApiGatewayServiceName(),
-            'WebIdentityToken' => $cognitoToken
+            'WebIdentityToken' => $cognitoToken,
+            "DurationSeconds" => 43200
         ));
 
         $credentials = $token->get('Credentials');
