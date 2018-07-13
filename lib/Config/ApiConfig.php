@@ -6,6 +6,7 @@ class ApiConfig {
     const AWS_API_GW_SERVICE_NAME = 'execute-api';
     const AWS_ROLE_ARN = 'arn:aws:iam::171608821407:role/Cognito_Chikyu_Normal_Id_PoolAuth_Role';
     const AWS_ROLE_DEV_ARN = 'arn:aws:iam::527083274078:role/Cognito_ChikyuDevLocalAuth_Role';
+    const AWS_ROLE_PROD_ARN = 'arn:aws:iam::171608821407:role/Cognito_chikyu_PROD_idpoolAuth_Role';
 
     static private $MODE = 'prod';
 
@@ -44,6 +45,9 @@ class ApiConfig {
     }
 
     static function awsRoleArn() {
+        if (self::$MODE == 'prod'){
+            return self::AWS_ROLE_PROD_ARN;
+        }
         if (self::$MODE == 'local' || self::$MODE == 'docker') {
             return self::AWS_ROLE_DEV_ARN;
         } else {
