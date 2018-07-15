@@ -17,7 +17,7 @@ class ApiConfig {
         'dev01' => 'gateway.chikyu.mobi',
         'dev02' => 'gateway.chikyu.mobi',
         'hotfix01' => 'gateway.chikyu.mobi',
-        'prod' => 'apiv2.chikyu.mobi'
+        'prod' => 'api.chikyu.net'
     ];
 
     const PROTOCOLS = [
