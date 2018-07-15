@@ -48,10 +48,7 @@ class Session {
         $sts = new StsClient(array(
             'version' => 'latest',
             'region' => ApiConfig::awsRegion(),
-            'credentials' => array(
-                'key' => '',
-                'secret' => ''
-            )
+            'credentials' => false
         ));
 
         $token = $sts->assumeRoleWithWebIdentity(array(
