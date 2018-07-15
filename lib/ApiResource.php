@@ -25,11 +25,7 @@ abstract class ApiResource {
                 return "{$p}://{$h}{$e}/api/v2/{$apiClass}/{$apiPath}";
             }
         } else {
-            if ($e == 'prod') {
-                return "/v2/{$apiClass}/{$apiPath}";
-            } else {
-                return "/{$e}/api/v2/{$apiClass}/{$apiPath}";
-            }
+            return "/{$e}/api/v2/{$apiClass}/{$apiPath}";
         }
     }
 
