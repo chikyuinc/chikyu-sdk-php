@@ -17,7 +17,7 @@ class ApiConfig {
         'dev01' => 'gateway.chikyu.mobi',
         'dev02' => 'gateway.chikyu.mobi',
         'hotfix01' => 'gateway.chikyu.mobi',
-        'prod' => 'api.chikyu.net'
+        'prod' => 'endpoint.chikyu.net'
     ];
 
     const PROTOCOLS = [
@@ -37,7 +37,7 @@ class ApiConfig {
         'dev01' => 'dev01',
         'dev02' => 'dev02',
         'hotfix01' => 'hotfix01',
-        'prod' => 'prod'
+        'prod' => ''
     ];
 
     static function awsRegion() {
@@ -47,8 +47,7 @@ class ApiConfig {
     static function awsRoleArn() {
         if (self::$MODE == 'prod'){
             return self::AWS_ROLE_PROD_ARN;
-        }
-        if (self::$MODE == 'local' || self::$MODE == 'docker') {
+        } else if (self::$MODE == 'local' || self::$MODE == 'docker') {
             return self::AWS_ROLE_DEV_ARN;
         } else {
             return self::AWS_ROLE_ARN;
