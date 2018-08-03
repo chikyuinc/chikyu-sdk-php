@@ -1,7 +1,5 @@
 # chikyu-sdk-php
 ## 概要
-**内容は全てリリース前のものであり、予告なく変更となる場合があります**
-
 ちきゅうのWeb APIをからPHP利用するためのライブラリです。
 
 SDKの開発にはPHP 5.6を利用しています。
@@ -29,7 +27,7 @@ Packagistには登録していないため、composer.jsonに以下のように�
 ```
 
 ## SDKを利用する
-### テスト段階でのサンプルコード
+### サンプルコード
 ```test.php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
@@ -37,9 +35,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 use Chikyu\Sdk\Config\ApiConfig;
 use Chikyu\Sdk\Resource\Session;
 use Chikyu\Sdk\SecureResource;
-
-# 2018/05/14現在、まだ本番環境が未構築であるため、こちらのテスト用の環境名を指定して下さい。
-ApiConfig::setMode('devdc');
 
 # セッションの生成
 $session = Session::login('token_name',  'login_token',  'login_secret_token');
@@ -60,9 +55,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 use Chikyu\Sdk\Config\ApiConfig;
 use Chikyu\Sdk\Resource\Session;
 use Chikyu\Sdk\SecureResource;
-
-# 2018/05/15現在、まだ本番環境が存在しないため、接続先の指定が必要。
-ApiConfig::setMode('devdc');
 
 # 後述のclass2 apiを利用し、予めログイン用の「認証トークン」(＊ここで言う「APIキー」とは別)を生成しておく。
 $session = Session::login('token_name',  'login_token',  'login_secret_token');
@@ -88,9 +80,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 use Chikyu\Sdk\Config\ApiConfig;
 use Chikyu\Sdk\PublicResource;
 
-# 2018/05/15現在、まだ本番環境が存在しないため、接続先の指定が必要。
-ApiConfig::setMode('devdc');
-
 $invoker = new PublicResource('api_key', 'auth_key');
 
 # 第一引数=APIのパスを指定(詳細については、ページ最下部のリンクを参照)
@@ -111,10 +100,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 use Chikyu\Sdk\Config\ApiConfig;
 use Chikyu\Sdk\Resource\Token;
 
-# 2018/05/15現在、まだ本番環境が存在しないため、接続先の指定が必要。
-ApiConfig::setMode('devdc');
-
-
 # ・トークン名称(任意)
 # ・ちきゅうのログイン用メールアドレス
 # ・ちきゅうのログイン用パスワード
@@ -133,10 +118,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use Chikyu\Sdk\Config\ApiConfig;
 use Chikyu\Sdk\Resource\Session;
-
-# 2018/05/15現在、まだ本番環境が存在しないため、接続先の指定が必要。
-ApiConfig::setMode('devdc');
-
 
 # セッションを生成する
 $session = $session = Session::login('token_name',  'login_token',  'login_secret_token');
@@ -167,9 +148,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 use Chikyu\Sdk\Config\ApiConfig;
 use Chikyu\Sdk\Resource\Session;
 use Chikyu\Sdk\SecureResource;
-
-# 2018/05/15現在、まだ本番環境が存在しないため、接続先の指定が必要。
-ApiConfig::setMode('devdc');
 
 # 上で生成したセッション情報を元に、API呼び出し用のリソースを生成する
 $invoker = new SecureResource($session);
