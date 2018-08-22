@@ -53,10 +53,18 @@ abstract class ApiResource {
                 'method' => 'POST',
                 'header' => implode(PHP_EOL, $header_list),
                 'content' => json_encode($data),
-                'ignore_errors' => false
+                'ignore_errors' => true
             )
         )));
 
+        $pos = strpos($http_response_header[0], '200');
+        if (!$pos) {
+            ApiLogger::error("******** ERROR RESPONSE ********");
+            ApiLogger::error($http_response_header);
+            ApiLogger::error($result);
+            ApiLogger::error("*************************");
+            return null;
+        }
         ApiLogger::debug("******** RESPONSE ********");
         ApiLogger::debug($http_response_header);
         ApiLogger::debug($result);
