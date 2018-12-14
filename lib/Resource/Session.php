@@ -8,17 +8,19 @@ use Chikyu\Sdk\SecureResource;
 
 class Session {
     private $sessionId;
+    private $sessionSecretKey;
     private $identityId;
     private $apiKey;
     private $credential;
     private $user;
 
-    private function __construct($sessionId, $identityId, $apiKey, $credential, $user) {
+    private function __construct($sessionId, $identityId, $apiKey, $credential, $user, $sessionSecretKey=null) {
         $this->sessionId = $sessionId;
         $this->identityId = $identityId;
         $this->apiKey = $apiKey;
         $this->credential = $credential;
         $this->user = $user;
+        $this->sessionSecretKey = $sessionSecretKey;
     }
 
     /**
@@ -45,6 +47,11 @@ class Session {
         $user = $data['user'];
         $apiKey = $data['api_key'];
 
+        $sessionSecretKey = null;
+        if (array_key_exists('session_secret_key', $data)) {
+            $sessionSecretKey = $data['session_secret_key'];
+        }
+
         $sts = new StsClient(array(
             'version' => 'latest',
             'region' => ApiConfig::awsRegion(),
@@ -60,7 +67,7 @@ class Session {
 
         $credentials = $token->get('Credentials');
 
-        return new Session($sessionId, $identityId, $apiKey, $credentials, $user);
+        return new Session($sessionId, $identityId, $apiKey, $credentials, $user, $sessionSecretKey);
     }
 
     /**
@@ -81,6 +88,7 @@ class Session {
         $resource = new SecureResource($this);
         $resource->invoke('/session/logout', array());
         $this->sessionId = null;
+        $this->sessionSecretKey = null;
         $this->user = null;
         $this->credential = null;
         $this->apiKey = null;
@@ -91,6 +99,7 @@ class Session {
         if ($withUser) {
             return [
                 'sessionId' => $this->sessionId,
+                'sessionSecretKey' => $this->sessionSecretKey,
                 'identityId' => $this->identityId,
                 'apiKey' => $this->apiKey,
                 'credentials' => $this->credential,
@@ -99,6 +108,7 @@ class Session {
         } else {
             return [
                 'sessionId' => $this->sessionId,
+                'sessionSecretKey' => $this->sessionSecretKey,
                 'identityId' => $this->identityId,
                 'apiKey' => $this->apiKey,
                 'credentials' => $this->credential,
