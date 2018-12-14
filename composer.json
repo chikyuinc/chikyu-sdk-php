@@ -18,7 +18,8 @@
 
   "require" : {
     "aws/aws-sdk-php": "3.*",
-    "monolog/monolog": "@stable"
+    "monolog/monolog": "@stable",
+    "ext-json": "*"
   },
 
   "require-dev": {

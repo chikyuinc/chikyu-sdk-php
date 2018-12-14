@@ -2,7 +2,9 @@
 
 use Chikyu\Sdk\Config\ApiConfig;
 use Chikyu\Sdk\Error\ApiExecuteException;
+use Chikyu\Sdk\Error\UnauthorizedException;
 use Chikyu\Sdk\Log\ApiLogger;
+use Exception;
 
 abstract class ApiResource {
     static function buildUrl($apiClass, $apiPath, $withHost=true) {
@@ -59,6 +61,21 @@ abstract class ApiResource {
 
         $pos = strpos($http_response_header[0], '200');
         if (!$pos) {
+            if (strpos($http_response_header[0], '401')) {
+                try {
+                    $map = json_decode($result, true);
+                } catch (Exception $e) {
+                    ApiLogger::error("予期しないレスポンス:${result}", $e);
+                    $map = [];
+                }
+                if (array_key_exists('message', $map)) {
+                    $msg = $map['message'];
+                } else {
+                    $msg = (string)$result;
+                }
+                throw new UnauthorizedException($msg);
+            }
+
             ApiLogger::error("******** ERROR RESPONSE ********");
             ApiLogger::error($http_response_header);
             ApiLogger::error($result);
@@ -82,6 +99,7 @@ abstract class ApiResource {
         if (!$response) {
             throw new ApiExecuteException("HTTPリクエストの送信に失敗しました");
         }
+
         $map = json_decode($response, true);
 
         if ($map['has_error']) {
