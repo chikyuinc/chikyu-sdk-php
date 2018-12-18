@@ -103,7 +103,7 @@ abstract class ApiResource {
         $map = json_decode($response, true);
 
         if ($map['has_error']) {
-            throw new ApiExecuteException("APIの呼び出しに失敗しました: " . $map['message']);
+            throw new ApiExecuteException($map['message']);
         }
 
         if (array_key_exists('data', $map)) {
