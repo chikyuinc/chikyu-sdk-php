@@ -5,6 +5,7 @@ use Chikyu\Sdk\Config\ApiConfig;
 use Chikyu\Sdk\Error\ApiExecuteException;
 use Chikyu\Sdk\OpenResource;
 use Chikyu\Sdk\SecureResource;
+use Chikyu\Sdk\SignlessResource;
 
 class Session {
     private $sessionId;
@@ -13,6 +14,7 @@ class Session {
     private $apiKey;
     private $credential;
     private $user;
+    private $useSignless = false;
 
     private function __construct($sessionId, $identityId, $apiKey, $credential, $user, $sessionSecretKey=null) {
         $this->sessionId = $sessionId;
@@ -82,11 +84,20 @@ class Session {
     }
 
     /**
+     * @return mixed
+     * @throws ApiExecuteException
+     */
+    public function exists() {
+        $resource = $this->useSignless ? new SignlessResource($this) : new SecureResource($this);
+        return $resource->invoke('/session/exists', new \stdClass());
+    }
+
+    /**
      * @throws ApiExecuteException
      */
     public function logout() {
-        $resource = new SecureResource($this);
-        $resource->invoke('/session/logout', array());
+        $resource = $this->useSignless ? new SignlessResource($this) : new SecureResource($this);
+        $resource->invoke('/session/logout', new \stdClass());
         $this->sessionId = null;
         $this->sessionSecretKey = null;
         $this->user = null;
@@ -142,6 +153,13 @@ class Session {
     /**
      * @return mixed
      */
+    public function getSessionSecretKey() {
+        return $this->sessionSecretKey;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getIdentityId() {
         return $this->identityId;
     }
@@ -165,5 +183,19 @@ class Session {
      */
     public function getUser() {
         return $this->user;
+    }
+
+    /**
+     * @param $flg
+     */
+    public function setUseSignless($flg) {
+        $this->useSignless = $flg;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isUseSignless() {
+        return $this->useSignless;
     }
 }
