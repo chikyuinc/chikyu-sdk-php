@@ -50,6 +50,8 @@ abstract class ApiResource {
         ApiLogger::debug($header_list);
         ApiLogger::debug($url . "\n");
         ApiLogger::debug("*************************");
+        Utils::log("file_get_contents start!!");
+        Utils::log("url: $url");
         $result = file_get_contents($url, false, stream_context_create(array( 'http' =>
             array(
                 'method' => 'POST',
@@ -76,12 +78,16 @@ abstract class ApiResource {
                 throw new UnauthorizedException($msg);
             }
 
+            Utils::log("http_response_header: $http_response_header");
+            Utils::log("result: $result");
             ApiLogger::error("******** ERROR RESPONSE ********");
             ApiLogger::error($http_response_header);
             ApiLogger::error($result);
             ApiLogger::error("*************************");
             return null;
         }
+        Utils::log("http_response_header: $http_response_header");
+        Utils::log("result: $result");
         ApiLogger::debug("******** RESPONSE ********");
         ApiLogger::debug($http_response_header);
         ApiLogger::debug($result);
