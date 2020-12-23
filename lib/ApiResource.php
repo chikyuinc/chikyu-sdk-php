@@ -4,6 +4,7 @@ use Chikyu\Sdk\Config\ApiConfig;
 use Chikyu\Sdk\Error\ApiExecuteException;
 use Chikyu\Sdk\Error\UnauthorizedException;
 use Chikyu\Sdk\Log\ApiLogger;
+use Chikyu\App\Utils;
 use Exception;
 
 abstract class ApiResource {
