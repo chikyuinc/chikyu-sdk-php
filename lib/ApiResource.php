@@ -95,8 +95,8 @@ abstract class ApiResource {
                 throw new UnauthorizedException($msg);
             }
 
-            $str_header =  var_export($http_response_header);
-            Utils::log("http_response_header: var_export($str_header)");
+            $str_header =  print_r($http_response_header);
+            Utils::log("http_response_header: print_r($str_header)");
             Utils::log("result: $result");
             ApiLogger::error("******** ERROR RESPONSE ********");
             ApiLogger::error($http_response_header);

@@ -43,10 +43,10 @@ class SecureResource extends ApiResource {
         Utils::log("path: $path");
         $headers = $signer->sign($path, $json);
 
-        $str_headers = var_export($headers);
+        $str_headers = print_r($headers);
         Utils::log("headers: $str_headers");
         Utils::log("apiPath: $apiPath");
-        $str_params = var_export($params);
+        $str_params = print_r($params);
         Utils::log("params: $str_params");
 
         $res = self::sendRequest(self::buildUrl('secure', $apiPath), $params, $headers);
