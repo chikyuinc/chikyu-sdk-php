@@ -53,6 +53,22 @@ abstract class ApiResource {
         ApiLogger::debug("*************************");
         Utils::log("file_get_contents start!!");
         Utils::log("url: $url");
+
+        $array = parse_url($url);
+
+        if ($array && $array['host']) {
+            $ip = gethostbyname($array['host']);
+            $long = ip2long($ip);
+
+            if ($long === false || $ip !== long2ip($long)) {
+                Utils::log('名前解決が出来ないため、存在しないドメイン');
+            } else {
+                Utils::log('OK!存在するドメインです');
+            }
+        } else {
+            Utils::log('URLの値が正しくありません');
+        }
+
         $result = file_get_contents($url, false, stream_context_create(array( 'http' =>
             array(
                 'method' => 'POST',
