@@ -53,6 +53,9 @@ abstract class ApiResource {
         ApiLogger::debug("*************************");
         Utils::log("file_get_contents start!!");
         Utils::log("url: $url");
+        foreach($header_list as $header) {
+            Utils::log("header_list: $header");
+        }
 
         $array = parse_url($url);
 
@@ -95,8 +98,7 @@ abstract class ApiResource {
                 throw new UnauthorizedException($msg);
             }
 
-            $str_header =  print_r($http_response_header);
-            Utils::log("http_response_header: print_r($str_header)");
+            Utils::log("http_response_header: $http_response_header[0]");
             Utils::log("result: $result");
             ApiLogger::error("******** ERROR RESPONSE ********");
             ApiLogger::error($http_response_header);
