@@ -9,7 +9,7 @@ class ApiConfig {
     const AWS_ROLE_DEV2_ARN = 'arn:aws:iam::527083274078:role/Cognito_Chikyu_Normal_Id_Pool_devAuth_Role';
     const AWS_ROLE_PROD_ARN = 'arn:aws:iam::171608821407:role/Cognito_chikyu_PROD_idpoolAuth_Role';
 
-    static private $MODE = 'prod';
+    static private $MODE = 'dev03';
 
     const HOSTS = [
         'local' => 'localhost:9090',
