@@ -16,6 +16,7 @@ class ApiConfig {
         'devdc' => 'gateway.chikyu.mobi',
         'dev01' => 'gateway.chikyu.mobi',
         'dev02' => 'gateway.chikyu.mobi',
+        'dev04' => 'gateway.chikyu.mobi',
         'hotfix01' => 'gateway.chikyu.mobi',
         'prod' => 'endpoint.chikyu.net'
     ];
@@ -26,6 +27,7 @@ class ApiConfig {
         'devdc' => 'https',
         'dev01' => 'https',
         'dev02' => 'https',
+        'dev04' => 'https',
         'hotfix01' => 'https',
         'prod' => 'https'
     ];
@@ -36,6 +38,7 @@ class ApiConfig {
         'devdc' => 'dev',
         'dev01' => 'dev01',
         'dev02' => 'dev02',
+        'dev04' => 'dev04',
         'hotfix01' => 'hotfix01',
         'prod' => ''
     ];
