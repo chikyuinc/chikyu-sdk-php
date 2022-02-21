@@ -4,6 +4,7 @@ use Chikyu\Sdk\Config\ApiConfig;
 use Chikyu\Sdk\Error\ApiExecuteException;
 use Chikyu\Sdk\Error\UnauthorizedException;
 use Chikyu\Sdk\Log\ApiLogger;
+use Chikyu\App\Utils;
 use Exception;
 
 abstract class ApiResource {
@@ -50,6 +51,27 @@ abstract class ApiResource {
         ApiLogger::debug($header_list);
         ApiLogger::debug($url . "\n");
         ApiLogger::debug("*************************");
+        Utils::log("file_get_contents start!!");
+        Utils::log("url: $url");
+        foreach($header_list as $header) {
+            Utils::log("header_list: $header");
+        }
+
+        $array = parse_url($url);
+
+        if ($array && $array['host']) {
+            $ip = gethostbyname($array['host']);
+            $long = ip2long($ip);
+
+            if ($long === false || $ip !== long2ip($long)) {
+                Utils::log('名前解決が出来ないため、存在しないドメイン');
+            } else {
+                Utils::log('OK!存在するドメインです');
+            }
+        } else {
+            Utils::log('URLの値が正しくありません');
+        }
+
         $result = file_get_contents($url, false, stream_context_create(array( 'http' =>
             array(
                 'method' => 'POST',
@@ -76,12 +98,16 @@ abstract class ApiResource {
                 throw new UnauthorizedException($msg);
             }
 
+            Utils::log("http_response_header: $http_response_header[0]");
+            Utils::log("result: $result");
             ApiLogger::error("******** ERROR RESPONSE ********");
             ApiLogger::error($http_response_header);
             ApiLogger::error($result);
             ApiLogger::error("*************************");
             return null;
         }
+        Utils::log("http_response_header: $http_response_header");
+        Utils::log("result: $result");
         ApiLogger::debug("******** RESPONSE ********");
         ApiLogger::debug($http_response_header);
         ApiLogger::debug($result);

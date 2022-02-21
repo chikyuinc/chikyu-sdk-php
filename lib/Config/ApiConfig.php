@@ -6,9 +6,10 @@ class ApiConfig {
     const AWS_API_GW_SERVICE_NAME = 'execute-api';
     const AWS_ROLE_ARN = 'arn:aws:iam::171608821407:role/Cognito_Chikyu_Normal_Id_PoolAuth_Role';
     const AWS_ROLE_DEV_ARN = 'arn:aws:iam::527083274078:role/Cognito_ChikyuDevLocalAuth_Role';
+    const AWS_ROLE_DEV2_ARN = 'arn:aws:iam::527083274078:role/Cognito_Chikyu_Normal_Id_Pool_devAuth_Role';
     const AWS_ROLE_PROD_ARN = 'arn:aws:iam::171608821407:role/Cognito_chikyu_PROD_idpoolAuth_Role';
 
-    static private $MODE = 'prod';
+    static private $MODE = 'dev03';
 
     const HOSTS = [
         'local' => 'localhost:9090',
@@ -16,6 +17,7 @@ class ApiConfig {
         'devdc' => 'gateway.chikyu.mobi',
         'dev01' => 'gateway.chikyu.mobi',
         'dev02' => 'gateway.chikyu.mobi',
+        'dev03' => 'gateway-dev.chikyu.mobi',
         'hotfix01' => 'gateway.chikyu.mobi',
         'prod' => 'endpoint.chikyu.net'
     ];
@@ -26,6 +28,7 @@ class ApiConfig {
         'devdc' => 'https',
         'dev01' => 'https',
         'dev02' => 'https',
+        'dev03' => 'https',
         'hotfix01' => 'https',
         'prod' => 'https'
     ];
@@ -36,6 +39,7 @@ class ApiConfig {
         'devdc' => 'dev',
         'dev01' => 'dev01',
         'dev02' => 'dev02',
+        'dev03' => 'dev03',
         'hotfix01' => 'hotfix01',
         'prod' => ''
     ];
@@ -49,6 +53,8 @@ class ApiConfig {
             return self::AWS_ROLE_PROD_ARN;
         } else if (self::$MODE == 'local' || self::$MODE == 'docker') {
             return self::AWS_ROLE_DEV_ARN;
+        }else if (self::$MODE == 'dev03'){
+            return self::AWS_ROLE_DEV2_ARN;
         } else {
             return self::AWS_ROLE_ARN;
         }
