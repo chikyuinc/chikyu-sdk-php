@@ -13,30 +13,18 @@ class ApiConfig {
     const HOSTS = [
         'local' => 'localhost:9090',
         'docker' => 'dev-python:9090',
-        'devdc' => 'gateway.chikyu.mobi',
-        'dev01' => 'gateway.chikyu.mobi',
-        'dev02' => 'gateway.chikyu.mobi',
-        'hotfix01' => 'gateway.chikyu.mobi',
         'prod' => 'endpoint.chikyu.net'
     ];
 
     const PROTOCOLS = [
         'local' => 'http',
         'docker' => 'http',
-        'devdc' => 'https',
-        'dev01' => 'https',
-        'dev02' => 'https',
-        'hotfix01' => 'https',
-        'prod' => 'https'
     ];
 
     const ENV_NAMES = [
         'local' => '',
         'docker' => '',
         'devdc' => 'dev',
-        'dev01' => 'dev01',
-        'dev02' => 'dev02',
-        'hotfix01' => 'hotfix01',
         'prod' => ''
     ];
 
@@ -59,15 +47,15 @@ class ApiConfig {
     }
 
     static function host() {
-        return self::HOSTS[self::mode()];
+        return self::HOSTS[self::mode()] ?? 'gateway.chikyu.mobi';
     }
 
     static function protocol() {
-        return self::PROTOCOLS[self::mode()];
+        return self::PROTOCOLS[self::mode()] ?? 'https';
     }
 
     static function envName() {
-        return self::ENV_NAMES[self::mode()];
+        return self::ENV_NAMES[self::mode()] ?? self::mode();
     }
 
     static function mode() {
