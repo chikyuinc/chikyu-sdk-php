@@ -56,7 +56,7 @@ class ApiConfig {
 
     static function protocol() {
         if(isset(self::PROTOCOLS[self::mode()])) {
-            self::PROTOCOLS[self::mode()];
+            return self::PROTOCOLS[self::mode()];
         } else {
             return 'https';
         }
