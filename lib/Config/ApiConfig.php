@@ -47,27 +47,27 @@ class ApiConfig {
     }
 
     static function host() {
+        // PHP5.6なのでNull合体演算子は使用不可
         if(isset(self::HOSTS[self::mode()])) {
             return self::HOSTS[self::mode()];
-        } else {
-            return 'gateway.chikyu.mobi';
         }
+        return 'gateway.chikyu.mobi';
     }
 
     static function protocol() {
+        // PHP5.6なのでNull合体演算子は使用不可
         if(isset(self::PROTOCOLS[self::mode()])) {
             return self::PROTOCOLS[self::mode()];
-        } else {
-            return 'https';
         }
+        return 'https';
     }
 
     static function envName() {
+        // PHP5.6なのでNull合体演算子は使用不可
         if(isset(self::ENV_NAMES[self::mode()])) {
             return self::ENV_NAMES[self::mode()];
-        } else {
-            return self::mode();
         }
+        return self::mode();
     }
 
     static function mode() {
