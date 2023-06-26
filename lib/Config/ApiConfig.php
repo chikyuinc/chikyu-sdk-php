@@ -19,6 +19,7 @@ class ApiConfig {
     const PROTOCOLS = [
         'local' => 'http',
         'docker' => 'http',
+        'prod' => 'https'
     ];
 
     const ENV_NAMES = [
