@@ -2,7 +2,7 @@
 ## 概要
 注意：古くなっており、現在は非推奨となっております。
 
-ちきゅうのWeb APIをからPHP利用するためのライブラリです。
+GENIEE SFA/CRM(旧ちきゅう)のWeb APIをからPHP利用するためのライブラリです。
 
 SDKの開発にはPHP 5.6を利用しています。
 
@@ -103,8 +103,8 @@ use Chikyu\Sdk\Config\ApiConfig;
 use Chikyu\Sdk\Resource\Token;
 
 # ・トークン名称(任意)
-# ・ちきゅうのログイン用メールアドレス
-# ・ちきゅうのログイン用パスワード
+# ・GENIEE SFA/CRM(旧ちきゅう)のログイン用メールアドレス
+# ・GENIEE SFA/CRM(旧ちきゅう)のログイン用パスワード
 # ・トークンの有効期限(デフォルトでは24時間 - 秒で指定)
 $token = Token::create('token_name', 'email', 'password', 86400);
 
