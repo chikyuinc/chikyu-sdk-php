@@ -10,6 +10,8 @@ class ApiConfig {
 
     static private $MODE = 'prod';
 
+    static private $CLIENT_IP = null;
+
     const HOSTS = [
         'local' => 'localhost:9090',
         'docker' => 'dev-python:9090',
@@ -68,6 +70,27 @@ class ApiConfig {
 
     static function setMode($mode) {
         self::$MODE = $mode;
+    }
+
+    /**
+     * リクエストの送信元となるエンドユーザーの IP アドレスを返す。未設定の場合は null。
+     */
+    static function clientIp() {
+        return self::$CLIENT_IP;
+    }
+
+    /**
+     * エンドユーザーの IP アドレスを設定する。設定すると X-Forwarded-For として送信され、API 側の監査ログに記録される。
+     * 信頼できる IP を 1 リクエストにつき 1 回設定すること。null で解除する。
+     *
+     * @param string|null $clientIp IPv4 または IPv6 アドレス
+     * @throws \InvalidArgumentException IP アドレスとして不正な場合
+     */
+    static function setClientIp($clientIp) {
+        if (!is_null($clientIp) && filter_var($clientIp, FILTER_VALIDATE_IP) === false) {
+            throw new \InvalidArgumentException('ApiConfig: the client IP is not an IP address');
+        }
+        self::$CLIENT_IP = $clientIp;
     }
 
 }

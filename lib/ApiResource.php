@@ -35,11 +35,21 @@ abstract class ApiResource {
         $header_list = array();
 
         $contentTypeExists = false;
+        $forwardedForExists = false;
         foreach ($headers as $k => $v) {
             $header_list[] = "{$k}: {$v}";
             if (strtolower($k) == 'content-type') {
                 $contentTypeExists = true;
             }
+            if (strtolower($k) == 'x-forwarded-for') {
+                $forwardedForExists = true;
+            }
+        }
+
+        // 署名の後に追加し、署名対象には含めない。API 側にはこのサーバーではなくエンドユーザーの IP を記録させる
+        $clientIp = ApiConfig::clientIp();
+        if (!is_null($clientIp) && !$forwardedForExists) {
+            $header_list[] = "X-Forwarded-For: {$clientIp}";
         }
 
         if (!$contentTypeExists) {
