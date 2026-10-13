@@ -1,5 +1,6 @@
 <?php namespace Chikyu\Sdk\Config;
 
+use Chikyu\Sdk\Log\ApiLogger;
 
 class ApiConfig {
     const AWS_REGION = 'ap-northeast-1';
@@ -82,12 +83,17 @@ class ApiConfig {
     /**
      * エンドユーザーの IP アドレスを設定する。設定すると X-Forwarded-For として送信され、API 側の監査ログに記録される。
      * 信頼できる IP を 1 リクエストにつき 1 回設定すること。null で解除する。
-     * IP アドレスとして不正な値（空文字など）は例外にせず、未設定（null）として扱う。
+     * IP アドレスとして不正な値（空文字など）は例外にせず、警告ログを出して未設定（null）として扱う。
      *
      * @param string|null $clientIp IPv4 または IPv6 アドレス
      */
     static function setClientIp($clientIp) {
-        if (!is_string($clientIp) || filter_var($clientIp, FILTER_VALIDATE_IP) === false) {
+        if (!is_null($clientIp) && (!is_string($clientIp) || filter_var($clientIp, FILTER_VALIDATE_IP) === false)) {
+            try {
+                ApiLogger::warn('ApiConfig: the client IP is not an IP address, X-Forwarded-For will not be sent');
+            } catch (\Throwable $e) {
+                // ログ出力の失敗で呼び出し側の処理を止めない
+            }
             $clientIp = null;
         }
         self::$CLIENT_IP = $clientIp;

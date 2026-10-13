@@ -116,9 +116,9 @@ class ApiLogger {
         if ($logger) {
             if ($exception) {
                 $ctx = ['exception' => $exception];
-                $logger->warn(self::parseMessage($message), $ctx);
+                $logger->warning(self::parseMessage($message), $ctx);
             } else {
-                $logger->warn(self::parseMessage($message));
+                $logger->warning(self::parseMessage($message));
             }
         }
     }
