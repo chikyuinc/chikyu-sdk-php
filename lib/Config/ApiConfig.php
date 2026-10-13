@@ -1,5 +1,6 @@
 <?php namespace Chikyu\Sdk\Config;
 
+use Chikyu\Sdk\Log\ApiLogger;
 
 class ApiConfig {
     const AWS_REGION = 'ap-northeast-1';
@@ -9,6 +10,8 @@ class ApiConfig {
     const AWS_ROLE_PROD_ARN = 'arn:aws:iam::171608821407:role/Cognito_chikyu_PROD_idpoolAuth_Role';
 
     static private $MODE = 'prod';
+
+    static private $CLIENT_IP = null;
 
     const HOSTS = [
         'local' => 'localhost:9090',
@@ -68,6 +71,28 @@ class ApiConfig {
 
     static function setMode($mode) {
         self::$MODE = $mode;
+    }
+
+    /**
+     * リクエストの送信元となるエンドユーザーの IP アドレスを返す。未設定の場合は null。
+     */
+    static function clientIp() {
+        return self::$CLIENT_IP;
+    }
+
+    /**
+     * エンドユーザーの IP アドレスを設定する。設定すると X-Forwarded-For として送信され、API 側の監査ログに記録される。
+     * 信頼できる IP を 1 リクエストにつき 1 回設定すること。null で解除する。
+     * IP アドレスとして不正な値（空文字など）は例外にせず、警告ログを出して未設定（null）として扱う。
+     *
+     * @param string|null $clientIp IPv4 または IPv6 アドレス
+     */
+    static function setClientIp($clientIp) {
+        if (!is_null($clientIp) && (!is_string($clientIp) || filter_var($clientIp, FILTER_VALIDATE_IP) === false)) {
+            ApiLogger::warn('ApiConfig: the client IP is not an IP address, X-Forwarded-For will not be sent');
+            $clientIp = null;
+        }
+        self::$CLIENT_IP = $clientIp;
     }
 
 }
