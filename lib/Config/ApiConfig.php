@@ -89,11 +89,7 @@ class ApiConfig {
      */
     static function setClientIp($clientIp) {
         if (!is_null($clientIp) && (!is_string($clientIp) || filter_var($clientIp, FILTER_VALIDATE_IP) === false)) {
-            try {
-                ApiLogger::warn('ApiConfig: the client IP is not an IP address, X-Forwarded-For will not be sent');
-            } catch (\Throwable $e) {
-                // ログ出力の失敗で呼び出し側の処理を止めない
-            }
+            ApiLogger::warn('ApiConfig: the client IP is not an IP address, X-Forwarded-For will not be sent');
             $clientIp = null;
         }
         self::$CLIENT_IP = $clientIp;
