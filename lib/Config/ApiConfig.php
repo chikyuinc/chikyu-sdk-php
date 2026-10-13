@@ -82,13 +82,13 @@ class ApiConfig {
     /**
      * エンドユーザーの IP アドレスを設定する。設定すると X-Forwarded-For として送信され、API 側の監査ログに記録される。
      * 信頼できる IP を 1 リクエストにつき 1 回設定すること。null で解除する。
+     * IP アドレスとして不正な値（空文字など）は例外にせず、未設定（null）として扱う。
      *
      * @param string|null $clientIp IPv4 または IPv6 アドレス
-     * @throws \InvalidArgumentException IP アドレスとして不正な場合
      */
     static function setClientIp($clientIp) {
-        if (!is_null($clientIp) && filter_var($clientIp, FILTER_VALIDATE_IP) === false) {
-            throw new \InvalidArgumentException('ApiConfig: the client IP is not an IP address');
+        if (!is_string($clientIp) || filter_var($clientIp, FILTER_VALIDATE_IP) === false) {
+            $clientIp = null;
         }
         self::$CLIENT_IP = $clientIp;
     }
